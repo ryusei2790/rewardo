@@ -29,7 +29,7 @@ export default function HomPage() {
 }
 
 function HomeContent() {
-  const { tasks, loading, addTask, toggleTask, deleteTask, reorderTasks } =
+  const { tasks, loading, addTask, addTasks, toggleTask, deleteTask, reorderTasks } =
     useTasks();
   const { rewards, patterns } = useRewards();
   const { pendingReward, increment, clearPendingReward } =
@@ -45,7 +45,7 @@ function HomeContent() {
       <main className="mx-auto max-w-2xl px-4 py-6">
         {/* タスク追加フォーム */}
         <div className="mb-4">
-          <AddTaskForm onAdd={addTask} />
+          <AddTaskForm onAdd={addTask} onAddBulk={addTasks} />
         </div>
 
         {/* タスク一覧 */}

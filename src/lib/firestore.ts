@@ -55,6 +55,29 @@ export const createFirestoreStore = (uid: string): DataStore => {
       return task;
     },
 
+    async addTasks(titles: string[]): Promise<Task[]> {
+      const trimmed = titles.map((t) => t.trim()).filter(Boolean);
+      if (trimmed.length === 0) return [];
+      const tasksSnap = await getDocs(p.tasks());
+      const basePosition = tasksSnap.size;
+      const now = Date.now();
+      const newTasks: Task[] = trimmed.map((title, i) => ({
+        id: generateId(),
+        title,
+        is_done: false,
+        position: basePosition + i,
+        created_at: now + i,
+      }));
+      const BATCH_LIMIT = 500;
+      for (let start = 0; start < newTasks.length; start += BATCH_LIMIT) {
+        const chunk = newTasks.slice(start, start + BATCH_LIMIT);
+        const batch = writeBatch(db);
+        chunk.forEach((task) => batch.set(p.task(task.id), task));
+        await batch.commit();
+      }
+      return newTasks;
+    },
+
     async updateTask(
       id: string,
       updates: Partial<Omit<Task, "id" | "created_at">>

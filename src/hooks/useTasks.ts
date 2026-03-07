@@ -8,6 +8,7 @@ interface UseTasksReturn {
   tasks: Task[];
   loading: boolean;
   addTask: (title: string) => Promise<void>;
+  addTasks: (titles: string[]) => Promise<void>;
   toggleTask: (id: string, onComplete?: () => void) => Promise<void>;
   deleteTask: (id: string) => Promise<void>;
   reorderTasks: (orderedIds: string[]) => Promise<void>;
@@ -31,6 +32,14 @@ export function useTasks(): UseTasksReturn {
     async (title: string) => {
       const task = await store.addTask(title);
       setTasks((prev) => [...prev, task]);
+    },
+    [store]
+  );
+
+  const addTasks = useCallback(
+    async (titles: string[]) => {
+      const newTasks = await store.addTasks(titles);
+      setTasks((prev) => [...prev, ...newTasks]);
     },
     [store]
   );
@@ -77,5 +86,5 @@ export function useTasks(): UseTasksReturn {
     [store]
   );
 
-  return { tasks, loading, addTask, toggleTask, deleteTask, reorderTasks };
+  return { tasks, loading, addTask, addTasks, toggleTask, deleteTask, reorderTasks };
 }
