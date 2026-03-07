@@ -21,7 +21,7 @@ export function AddTaskForm({ onAdd }: AddTaskFormProps) {
     try {
       await onAdd(trimmed);
       setTitle("");
-      inputRef.current?.focus();
+      setTimeout(() => inputRef.current?.focus(), 0);
     } finally {
       setLoading(false);
     }
