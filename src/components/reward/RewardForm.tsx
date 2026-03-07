@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 
 interface RewardFormProps {
   onAdd: (content: string, weight: number) => Promise<void>;
@@ -11,6 +11,7 @@ export function RewardForm({ onAdd }: RewardFormProps) {
   const [content, setContent] = useState("");
   const [weight, setWeight] = useState(5);
   const [loading, setLoading] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -22,6 +23,7 @@ export function RewardForm({ onAdd }: RewardFormProps) {
       await onAdd(trimmed, weight);
       setContent("");
       setWeight(5);
+      setTimeout(() => inputRef.current?.focus(), 0);
     } finally {
       setLoading(false);
     }
@@ -30,6 +32,7 @@ export function RewardForm({ onAdd }: RewardFormProps) {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-3">
       <input
+        ref={inputRef}
         type="text"
         value={content}
         onChange={(e) => setContent(e.target.value)}
