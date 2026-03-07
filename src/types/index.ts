@@ -37,6 +37,7 @@ export interface DataStore {
   // Tasks
   getTasks(): Promise<Task[]>;
   addTask(title: string): Promise<Task>;
+  addTasks(titles: string[]): Promise<Task[]>;
   updateTask(id: string, updates: Partial<Omit<Task, "id" | "created_at">>): Promise<void>;
   deleteTask(id: string): Promise<void>;
   reorderTasks(orderedIds: string[]): Promise<void>;

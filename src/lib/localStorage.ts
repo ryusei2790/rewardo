@@ -46,6 +46,24 @@ export const createLocalStore = (): DataStore => ({
     return task;
   },
 
+  async addTasks(titles: string[]): Promise<Task[]> {
+    const tasks = readJSON<Task[]>(KEYS.tasks, []);
+    const basePosition = tasks.length;
+    const now = Date.now();
+    const newTasks: Task[] = titles
+      .map((t) => t.trim())
+      .filter(Boolean)
+      .map((title, i) => ({
+        id: generateId(),
+        title,
+        is_done: false,
+        position: basePosition + i,
+        created_at: now + i,
+      }));
+    writeJSON(KEYS.tasks, [...tasks, ...newTasks]);
+    return newTasks;
+  },
+
   async updateTask(
     id: string,
     updates: Partial<Omit<Task, "id" | "created_at">>

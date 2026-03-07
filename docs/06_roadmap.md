@@ -25,6 +25,15 @@
 - [ ] タスク削除
 - [ ] 完了済みタスクを下部に薄表示
 
+### Phase 3.5：タスク一括追加
+
+- [ ] `DataStore` インターフェースに `addTasks(titles: string[])` を追加
+- [ ] `localStorage.ts` に一括追加実装（atomic な readJSON/writeJSON）
+- [ ] `firestore.ts` に一括追加実装（`writeBatch` による効率的な書き込み）
+- [ ] `useTasks.ts` に `addTasks` フック関数を追加
+- [ ] `AddTaskForm.tsx` にタブ切り替えUI（1件追加 / まとめて追加）を実装
+- [ ] textarea で1行1タスク入力、送信後に追加件数フィードバック表示
+
 ### Phase 4：ドラッグ並び替え
 
 - [ ] `@dnd-kit/core` + `@dnd-kit/sortable` 導入
