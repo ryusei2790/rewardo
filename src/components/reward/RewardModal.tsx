@@ -23,11 +23,9 @@ export function RewardModal({ reward, onClose }: RewardModalProps) {
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
-      onClick={onClose}
     >
       <div
         className="mx-4 w-full max-w-sm rounded-2xl border border-zinc-700 bg-zinc-900 p-8 text-center shadow-2xl"
-        onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-4 text-5xl">🎉</div>
         <h2 className="mb-2 text-lg font-semibold text-white">ご褒美ゲット！</h2>
